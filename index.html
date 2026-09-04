@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>DJ Juan Son</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root{
+    --bg:#0A0A14;
+    --surface:#12131E;
+    --surface2:#171826;
+    --line:#262838;
+    --text:#F1F0F6;
+    --text-dim:#8A8AA0;
+    --accent:#7B5FFF;
+    --accent2:#3FCBFF;
+  }
+  [data-theme="mono"]{
+    --bg:#08090F;
+    --surface:#111219;
+    --surface2:#15161F;
+    --line:#242536;
+    --text:#F1F0F6;
+    --text-dim:#83849A;
+    --accent:#4F7CFF;
+    --accent2:#4F7CFF;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .switcher{
+    display:flex; justify-content:center; gap:8px;
+    padding:24px 16px 0;
+    background:var(--bg);
+  }
+  .switcher button{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.02em;
+    background:transparent;
+    color:var(--text-dim);
+    border:1px solid var(--line);
+    padding:8px 16px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:color .15s, border-color .15s;
+  }
+  .switcher button.active{
+    color:var(--bg);
+    background:var(--text);
+    border-color:var(--text);
+  }
+
+  .page{
+    max-width:520px;
+    margin:0 auto;
+    padding:40px 20px 60px;
+  }
+
+  /* HERO */
+  .hero{ text-align:center; margin-bottom:44px; }
+  .hero .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:52px;
+    line-height:0.95;
+    letter-spacing:-0.01em;
+    margin-bottom:10px;
+  }
+  .hero p{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:320px;
+    margin:0 auto;
+  }
+
+  /* WAVEFORM */
+  .wave{
+    display:flex;
+    align-items:flex-end;
+    gap:2px;
+    height:46px;
+    margin:28px auto 0;
+    max-width:360px;
+  }
+  .wave span{
+    flex:1;
+    background:var(--accent);
+    opacity:.55;
+    border-radius:1px;
+  }
+
+  /* PLAYER */
+  .player{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:36px;
+  }
+  .play-btn{
+    width:42px; height:42px;
+    border-radius:50%;
+    background:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .play-btn svg{ width:14px; height:14px; }
+  [data-theme="mono"] .play-btn svg path{ fill:#0A0A0A; }
+  .play-btn svg path{ fill:#0B0D12; }
+  .player-info{ flex:1; min-width:0; }
+  .player-info .t1{ font-size:14px; font-weight:600; }
+  .player-info .t2{ font-size:12px; color:var(--text-dim); margin-top:2px; }
+  .player-track{
+    height:3px; background:var(--line); border-radius:2px; margin-top:10px; position:relative;
+  }
+  .player-track i{
+    position:absolute; left:0; top:0; bottom:0; width:28%;
+    background:var(--accent); border-radius:2px;
+  }
+
+  /* SECTION LABEL */
+  .section-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+
+  /* TRACK LIST */
+  .track{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .track .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--text-dim);
+    width:18px;
+    flex-shrink:0;
+  }
+  .track .meta{ flex:1; min-width:0; }
+  .track .meta .name{ font-size:15px; font-weight:600; }
+  .track .meta .bpm{ font-size:12px; color:var(--text-dim); margin-top:2px; }
+  .dl{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.03em;
+    color:var(--text);
+    border:1px solid var(--line);
+    background:var(--surface2);
+    padding:8px 12px;
+    border-radius:6px;
+    white-space:nowrap;
+    display:flex; align-items:center; gap:6px;
+    flex-shrink:0;
+  }
+  .dl svg{ width:11px; height:11px; }
+  .dl svg path{ fill:var(--text); }
+
+  /* FOOTER LINKS */
+  .footer{
+    margin-top:40px;
+    display:flex;
+    gap:10px;
+  }
+  .footer a{
+    flex:1;
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    text-decoration:none;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:13px 0;
+  }
+  .footer a.primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:var(--bg);
+  }
+
+  .foot-note{
+    text-align:center;
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:22px;
+  }
+</style>
+</head>
+<body data-theme="neon">
+
+<div class="switcher">
+  <button class="active" data-theme-btn="neon">neon rave</button>
+  <button data-theme-btn="mono">stripped mono</button>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="tag">FULL MIX MP3 · 4 TRACKS FREE WAV</div>
+    <h1>DJ JUAN<br>SON</h1>
+    <p>EDM after hour mix — built for beach clubs and late sets. Play it, mix it, keep it.</p>
+    <div class="wave" id="wave"></div>
+  </div>
+
+  <a href="https://soundcloud.com/dj-juan-son/dj-juan-son-edm-after-hour-mix" class="player" style="text-decoration:none; color:inherit;">
+    <div class="play-btn">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <div class="player-info">
+      <div class="t1">DJ Juan Son — EDM After Hour Mix</div>
+      <div class="t2">1:22:00 · stream on SoundCloud</div>
+      <div class="player-track"><i></i></div>
+    </div>
+  </a>
+
+  <a href="#mp3-host-placeholder" id="mp3-download" class="dl" style="width:100%; justify-content:center; padding:14px 0; margin-bottom:36px; text-decoration:none; font-size:13px;">
+    <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zM4 18h16v2H4z"/></svg>
+    Download full mix (MP3, 1:22:00)
+  </a>
+
+  <div class="section-label">FREE WAV DOWNLOADS · SINGLE TRACKS</div>
+
+  <div class="track">
+    <div class="num">01</div>
+    <div class="meta">
+      <div class="name">Horizon</div>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1Amn3YLSCVwnaAlZ9PqEhkDuPX_YDM61t" class="dl" style="text-decoration:none;"><svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zM4 18h16v2H4z"/></svg>WAV</a>
+  </div>
+
+  <div class="track">
+    <div class="num">02</div>
+    <div class="meta">
+      <div class="name">Golden Hour</div>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1HFqcsJmeg2UtPkUcg7bpeHz5_MvyOZwB" class="dl" style="text-decoration:none;"><svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zM4 18h16v2H4z"/></svg>WAV</a>
+  </div>
+
+  <div class="track">
+    <div class="num">03</div>
+    <div class="meta">
+      <div class="name">Euphoria</div>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1oKnby1BYU_6OypZNswMBpzJPbj9eIhbO" class="dl" style="text-decoration:none;"><svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zM4 18h16v2H4z"/></svg>WAV</a>
+  </div>
+
+  <div class="track">
+    <div class="num">04</div>
+    <div class="meta">
+      <div class="name">Between Worlds</div>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1zpxFInot-mmJwfbwkE83kD8H02meRRtz" class="dl" style="text-decoration:none;"><svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zM4 18h16v2H4z"/></svg>WAV</a>
+  </div>
+
+  <div class="footer">
+    <a href="https://soundcloud.com/dj-juan-son" class="primary">SoundCloud</a>
+    <a href="https://www.instagram.com/djjuanson">Instagram</a>
+  </div>
+
+
+</div>
+
+<script>
+  const waveEl = document.getElementById('wave');
+  let bars = '';
+  for(let i=0;i<48;i++){
+    const h = 20 + Math.round(Math.sin(i*0.5)*10 + Math.random()*16);
+    bars += '<span style="height:'+h+'px"></span>';
+  }
+  waveEl.innerHTML = bars;
+
+  document.querySelectorAll('[data-theme-btn]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.body.setAttribute('data-theme', btn.dataset.themeBtn);
+      document.querySelectorAll('[data-theme-btn]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
